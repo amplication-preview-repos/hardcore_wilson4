@@ -26,6 +26,8 @@ import { AiProviderFindUniqueArgs } from "./AiProviderFindUniqueArgs";
 import { CreateAiProviderArgs } from "./CreateAiProviderArgs";
 import { UpdateAiProviderArgs } from "./UpdateAiProviderArgs";
 import { DeleteAiProviderArgs } from "./DeleteAiProviderArgs";
+import { CloudflareAiRequestDto } from "../CloudflareAiRequestDto";
+import { OpenRouterRequestDto } from "../OpenRouterRequestDto";
 import { AiProviderService } from "../aiProvider.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => AiProvider)
@@ -140,5 +142,21 @@ export class AiProviderResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.Mutation(() => String)
+  async IntegrateCloudflareAiGateway(
+    @graphql.Args()
+    args: CloudflareAiRequestDto
+  ): Promise<string> {
+    return this.service.IntegrateCloudflareAiGateway(args);
+  }
+
+  @graphql.Mutation(() => String)
+  async IntegrateOpenRouter(
+    @graphql.Args()
+    args: OpenRouterRequestDto
+  ): Promise<string> {
+    return this.service.IntegrateOpenRouter(args);
   }
 }

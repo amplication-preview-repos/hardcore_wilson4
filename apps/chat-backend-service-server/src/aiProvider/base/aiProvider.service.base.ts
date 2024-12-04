@@ -11,6 +11,8 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { PrismaService } from "../../prisma/prisma.service";
 import { Prisma, AiProvider as PrismaAiProvider } from "@prisma/client";
+import { CloudflareAiRequestDto } from "../CloudflareAiRequestDto";
+import { OpenRouterRequestDto } from "../OpenRouterRequestDto";
 
 export class AiProviderServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -45,5 +47,13 @@ export class AiProviderServiceBase {
     args: Prisma.AiProviderDeleteArgs
   ): Promise<PrismaAiProvider> {
     return this.prisma.aiProvider.delete(args);
+  }
+  async IntegrateCloudflareAiGateway(
+    args: CloudflareAiRequestDto
+  ): Promise<string> {
+    throw new Error("Not implemented");
+  }
+  async IntegrateOpenRouter(args: OpenRouterRequestDto): Promise<string> {
+    throw new Error("Not implemented");
   }
 }

@@ -26,6 +26,8 @@ import { AiProvider } from "./AiProvider";
 import { AiProviderFindManyArgs } from "./AiProviderFindManyArgs";
 import { AiProviderWhereUniqueInput } from "./AiProviderWhereUniqueInput";
 import { AiProviderUpdateInput } from "./AiProviderUpdateInput";
+import { CloudflareAiRequestDto } from "../CloudflareAiRequestDto";
+import { OpenRouterRequestDto } from "../OpenRouterRequestDto";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -196,5 +198,39 @@ export class AiProviderControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.Post("/cloudflare-ai")
+  @swagger.ApiOkResponse({
+    type: String,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async IntegrateCloudflareAiGateway(
+    @common.Body()
+    body: CloudflareAiRequestDto
+  ): Promise<string> {
+    return this.service.IntegrateCloudflareAiGateway(body);
+  }
+
+  @common.Post("/openrouter")
+  @swagger.ApiOkResponse({
+    type: String,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async IntegrateOpenRouter(
+    @common.Body()
+    body: OpenRouterRequestDto
+  ): Promise<string> {
+    return this.service.IntegrateOpenRouter(body);
   }
 }
